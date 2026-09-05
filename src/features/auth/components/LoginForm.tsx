@@ -1,23 +1,39 @@
 "use client";
 
-import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import Input from "@/components/ui/Input";
+import Button from "@/components/ui/Button";
+import Form from "@/components/ui/Form";
+
+import {
+  loginSchema,
+  type LoginFormData,
+} from "../schemas/auth.schema";
 
 export default function LoginForm() {
   const router = useRouter();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    defaultValues: {
+      email: "",
+      password: "",
+      remember: false,
+    },
+  });
+
+  const onSubmit = (data: LoginFormData) => {
+    console.log("Login data:", data);
 
     // Dummy login for now
-    console.log({
-      email,
-      password,
-    });
-
     router.push("/dashboard");
   };
 
@@ -25,7 +41,8 @@ export default function LoginForm() {
     <div className="flex min-h-screen items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-200">
-          {/* Logo / Brand */}
+
+          {/* Logo */}
           <div className="mb-8 text-center">
             <h1 className="text-3xl font-bold text-slate-900">
               StayMate
@@ -36,26 +53,18 @@ export default function LoginForm() {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Email */}
-            <div>
-              <label
-                htmlFor="email"
-                className="mb-2 block text-sm font-medium text-slate-700"
-              >
-                Email
-              </label>
+          <Form onSubmit={handleSubmit(onSubmit)}>
 
-              <input
-                id="email"
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="w-full rounded-lg border border-slate-300 px-4 py-3 text-sm text-black placeholder:text-slate-400 outline-none transition focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
-              />
-            </div>
+            {/* Email */}
+            <Input
+              id="email"
+              label="Email"
+              type="email"
+              placeholder="Enter your email"
+              autoComplete="email"
+              {...register("email")}
+              error={errors.email?.message}
+            />
 
             {/* Password */}
             <div>
@@ -74,45 +83,47 @@ export default function LoginForm() {
                   Forgot password?
                 </button>
               </div>
-              <input
+
+              <Input
                 id="password"
                 type="password"
                 placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                className="w-full rounded-lg border border-slate-300 px-4 py-3 text-sm text-black placeholder:text-slate-400 outline-none transition focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
+                autoComplete="current-password"
+                {...register("password")}
+                error={errors.password?.message}
               />
             </div>
 
             {/* Remember me */}
-            <div className="flex items-center gap-2">
-              <input
-                id="remember"
-                type="checkbox"
-                className="h-4 w-4 rounded border-slate-300"
-              />
+            <div>
+              <div className="flex items-center gap-2">
+                <input
+                  id="remember"
+                  type="checkbox"
+                  className="h-4 w-4 rounded border-slate-300"
+                  {...register("remember")}
+                />
 
-              <label
-                htmlFor="remember"
-                className="text-sm text-slate-600"
-              >
-                Remember me
-              </label>
+                <label
+                  htmlFor="remember"
+                  className="text-sm text-slate-600"
+                >
+                  Remember me
+                </label>
+              </div>
             </div>
 
             {/* Login */}
-            <button
-              type="submit"
-              className="w-full rounded-lg bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
-            >
+            <Button type="submit">
               Login
-            </button>
-          </form>
+            </Button>
+
+          </Form>
 
           {/* Register */}
           <p className="mt-6 text-center text-sm text-slate-500">
             Don't have an account?{" "}
+
             <button
               type="button"
               className="font-semibold text-slate-900 hover:underline"
@@ -120,6 +131,7 @@ export default function LoginForm() {
               Create account
             </button>
           </p>
+
         </div>
       </div>
     </div>

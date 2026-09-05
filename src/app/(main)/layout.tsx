@@ -7,15 +7,22 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-[#e8eef5]">
+
+      {/* Sidebar */}
       <Sidebar />
 
-      <div className="ml-64">
+      {/* Right side */}
+      <div className="ml-[260px] min-h-screen">
+
+        {/* Header */}
         <Header />
 
-        <main className="p-6">
+        {/* Page */}
+        <main className="min-h-[calc(100vh-72px)] p-6">
           {children}
         </main>
+
       </div>
     </div>
   );
