@@ -14,6 +14,7 @@ import {
   Settings,
   LogOut,
   ChevronRight,
+  Bell,
 } from "lucide-react";
 
 const navigation = [
@@ -32,11 +33,7 @@ const navigation = [
     href: "/users",
     icon: Users,
   },
-  {
-    name: "Friends",
-    href: "/friends",
-    icon: Heart,
-  },
+
   {
     name: "Groups",
     href: "/groups",
@@ -46,6 +43,11 @@ const navigation = [
     name: "Chat",
     href: "/chat",
     icon: MessageCircle,
+  },
+    {
+    name: "Notifications",
+    href: "/notifications",
+    icon: Bell,
   },
 ];
 

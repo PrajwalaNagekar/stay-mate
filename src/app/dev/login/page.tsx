@@ -14,7 +14,7 @@ export default function Login() {
 
     try {
       const response = await fetch(
-        "http://localhost:7000/api/auth/v1/login",
+        "http://localhost:7001/api/auth/v1/login",
         {
           method: "POST",
           headers: {
@@ -58,7 +58,7 @@ export default function Login() {
       );
 
       // Redirect after successful login
-      router.push("/plan");
+      router.push("/dev/plan");
     } catch (error) {
       console.error("Login error:", error);
       alert("Something went wrong");
