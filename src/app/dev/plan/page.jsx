@@ -22,7 +22,7 @@ export default function Plans() {
         localStorage.getItem("accessToken");
 
       if (!accessToken) {
-        router.replace("/login");
+        router.replace("/dev/login");
         return {
           success: false,
           message: "Please login again",

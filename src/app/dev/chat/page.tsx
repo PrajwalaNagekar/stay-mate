@@ -1,7 +1,13 @@
+import ChatRoom from "./ChatRoom";
 
-
-export default function Chat() {
+export default function ChatPage() {
   return (
-  <h1>jjjj</h1>
+    <div className="p-8">
+      <h1 className="text-3xl font-bold">
+        Chat
+      </h1>
+
+      <ChatRoom />
+    </div>
   );
 }
